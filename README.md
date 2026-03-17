@@ -1,16 +1,20 @@
-## Hi there 👋
+Hi, I’m Anteneh 👋
 
-<!--
-**antenehassefa/antenehassefa** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+I’m a cybersecurity student focused on becoming a SOC Analyst. I am actively building hands-on experience through real-world security labs and projects.
 
-Here are some ideas to get you started:
+Current Focus
+- Building a Home SOC Lab using Splunk
+- Practicing log analysis and threat detection
+- Simulating real-world attack scenarios
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+Skills in Progress
+- SIEM (Splunk)
+- Log analysis
+- Threat detection
+- Basic incident response
+
+Projects
+- SOC Lab Detection Project (in progress)
+
+Goal
+To transition into an entry-level SOC Analyst role by developing practical, job-ready cybersecurity skills.
