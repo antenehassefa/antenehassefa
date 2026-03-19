@@ -1,0 +1,169 @@
+
+## Splunk Installation
+
+Installed Splunk using dpkg package manager.
+Resolved dependencies using apt if required.
+
+## Splunk Service Start
+
+Successfully started Splunk service.
+
+System completed all preliminary checks and launched the web interface on port 8000.
+
+Splunk is now operational and ready for use.
+
+
+## Issue: No Admin User Created
+
+### Problem
+Splunk started successfully but displayed:
+"No users exist. Please set up a user."
+
+### Resolution
+
+Stopped Splunk service:
+```bash
+sudo /opt/splunk/bin/splunk stop
+```
+Created user seed configuration file:
+```
+sudo nano /opt/splunk/etc/system/local/user-seed.conf
+```
+Added the following configuration:
+> [!NOTE]
+> [user_info]
+> USERNAME = admin
+> PASSWORD = <redacted>
+
+Finally, Restarted splunk
+sudo /opt/splunk/bin/splunk start --accept-license --answer-yes --run-as-root
+
+Outcome
+Successfully created admin user and gained access to Splunk web interface.
+
+
+## Data Ingestion
+
+Accessed Splunk “Add Data” interface to begin ingesting system logs.
+
+
+Copied Linux authentication logs (auth.log) for ingestion into Splunk.
+
+
+## Issue: Permission Denied on Log File
+
+### Problem
+Encountered "permission denied" error when accessing auth.log file.
+
+### Resolution
+Changed file ownership to current user:
+
+```bash
+sudo chown anteneh:anteneh ~/auth.log
+
+### Outcome
+
+Successfully gained access to log file for ingestion into Splunk.
+
+
+---
+
+# 🔥 Alternative (pro-level knowledge)
+
+Instead of changing ownership, you could also:
+
+```bash
+sudo chmod +r ~/auth.log
+
+## Data Upload Completion
+
+Successfully uploaded auth.log into Splunk.
+Data is now indexed and ready for search and analysis.
+
+## Initial Log Search
+
+Executed search query:
+
+index=main
+
+Successfully retrieved system logs including:
+- sudo activity
+- cron jobs
+- user sessions
+
+Confirmed that log ingestion and indexing are working correctly.
+
+## Simulated Attack: Failed SSH Logins
+
+Performed multiple failed SSH login attempts using a non-existent user account.
+
+Purpose:
+Generate authentication failure events for detection testing.
+
+
+## Live Log Monitoring Setup
+
+Selected "Monitor" option in Splunk to enable real-time log ingestion.
+
+Configured Splunk to monitor files and directories for continuous log ingestion.
+
+## Live Log Monitoring Configuration
+
+Configured Splunk to monitor the Linux authentication log file located at:
+
+/var/log/auth.log
+
+Logs are indexed under the "main" index using the linux_secure source type.
+
+This enables real-time ingestion of authentication events.
+
+## Log Ingestion Mechanism
+
+Splunk was configured to monitor the file /var/log/auth.log.
+
+Rather than redirecting logs manually, Splunk continuously reads new entries from the file as they are written by the operating system.
+
+This allows real-time ingestion of authentication events such as SSH login attempts.
+
+## Detection: Failed Logins by IP
+
+Used regex extraction to identify source IPs from authentication logs.
+
+Query:
+
+index=main "Failed password"
+| rex "from (?<src_ip>\d+\.\d+\.\d+\.\d+)"
+| stats count by src_ip
+
+This allows identification of potential brute-force attempts.
+
+
+## Detection: Failed SSH Authentication Attempts by Source IP
+
+Analyzed authentication logs to identify repeated failed login attempts and determine the originating source IP.
+
+Executed query:
+
+index=main ssh
+| rex "rhost=(?<src_ip>\d+\.\d+\.\d+\.\d+)"
+| stats count by src_ip
+| sort -count
+
+### Analysis
+
+The query extracts the source IP address from SSH authentication failure events and aggregates the number of attempts per IP.
+
+This allows identification of hosts generating repeated failed login attempts, which may indicate brute-force activity.
+
+### Result
+
+Observed multiple failed authentication attempts originating from a single source IP (127.0.0.1), corresponding to simulated attack activity.
+
+### Insight
+
+This demonstrates the ability to:
+- Parse unstructured log data using regex
+- Identify patterns of suspicious authentication behavior
+- Correlate events by source to detect potential threats
+
+This approach can be extended to detect brute-force attacks and trigger alerts based on defined thresholds.
