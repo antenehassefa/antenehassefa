@@ -1,7 +1,7 @@
 ## Splunk Installation
 
 Installed Splunk using dpkg package manager. 
-![install] (01-Splunk-Lab/screenshots/splunk-install.png)
+![image](screenshots/splunk-install.png)
 Resolved dependencies using apt if required.
 
 ## Splunk Service Start
