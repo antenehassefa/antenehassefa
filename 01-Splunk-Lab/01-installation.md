@@ -42,3 +42,5 @@ sudo /opt/splunk/bin/splunk start --accept-license --answer-yes --run-as-root
 
 Outcome
 Successfully created admin user and gained access to Splunk web interface.
+
+![image](screenshots/splunk-running.png)
