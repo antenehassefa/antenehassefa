@@ -14,7 +14,7 @@ System completed all preliminary checks and launched the web interface on port 8
 
 Splunk is now operational and ready for use.
 
-
+![image](screenshots/splunk-started.png)
 ## Issue: No Admin User Created
 
 ### Problem
