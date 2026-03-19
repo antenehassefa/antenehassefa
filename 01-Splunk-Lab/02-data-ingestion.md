@@ -24,12 +24,12 @@ sudo chown anteneh:anteneh ~/auth.log
 
 Successfully gained access to log file for ingestion into Splunk.
 
-
 ---
 
 # 🔥 Alternative (pro-level knowledge)
 
-Instead of changing ownership, you could also:
+Instead of changing ownership, we could also use:
 
 ```bash
 sudo chmod +r ~/auth.log
+```
