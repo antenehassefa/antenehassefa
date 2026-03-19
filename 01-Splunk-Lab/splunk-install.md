@@ -6,6 +6,7 @@
 Successfully uploaded auth.log into Splunk.
 Data is now indexed and ready for search and analysis.
 
+![image]()
 ## Initial Log Search
 
 Executed search query:
