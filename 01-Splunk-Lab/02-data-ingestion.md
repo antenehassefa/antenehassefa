@@ -18,6 +18,7 @@ Changed file ownership to current user:
 
 ```bash
 sudo chown anteneh:anteneh ~/auth.log
+```
 
 ### Outcome
 
