@@ -15,5 +15,6 @@
 - Network configured via DHCP
 - SSH enabled for remote access
 
+![image](screenshots/network-config.png)
 ### System Ready State
 The server is fully configured and ready for Splunk installation.
