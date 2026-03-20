@@ -26,7 +26,6 @@ Confirmed that log ingestion and indexing are working correctly.
 Performed multiple failed SSH login attempts using a non-existent user account.
 
 Purpose:
-
 Generate authentication failure events for detection testing.
 
 ![image](screenshots/failed-logins-by-ssh.png)
