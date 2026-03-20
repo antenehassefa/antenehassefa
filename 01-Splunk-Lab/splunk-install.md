@@ -69,7 +69,7 @@ index=main "Failed password"
 
 This allows identification of potential brute-force attempts.
 
-
+![image](screenshots/failed-logins-by-ip.png)
 ## Detection: Failed SSH Authentication Attempts by Source IP
 
 Analyzed authentication logs to identify repeated failed login attempts and determine the originating source IP.
