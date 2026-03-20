@@ -47,6 +47,8 @@ Logs are indexed under the "main" index using the linux_secure source type.
 
 This enables real-time ingestion of authentication events.
 
+![image](screenshots/splunk-live-config-review.png)
+
 ## Log Ingestion Mechanism
 
 Splunk was configured to monitor the file /var/log/auth.log.
