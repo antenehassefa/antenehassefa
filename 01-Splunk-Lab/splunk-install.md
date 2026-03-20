@@ -91,6 +91,7 @@ This allows identification of hosts generating repeated failed login attempts, w
 
 Observed multiple failed authentication attempts originating from a single source IP (127.0.0.1), corresponding to simulated attack activity.
 
+![image](screenshots/ip-counts.png)
 ### Insight
 
 This demonstrates the ability to:
