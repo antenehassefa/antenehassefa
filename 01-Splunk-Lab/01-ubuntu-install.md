@@ -5,7 +5,7 @@
 - Terminal access confirmed
 - Hostname configured as "splunk-server"
 - User account operational
-
+![image](screenshots/ubuntu-running.png.png)
 ### Environment Details
 - Virtualized on Proxmox
 - Network configured via DHCP
