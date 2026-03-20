@@ -33,7 +33,7 @@ Generate authentication failure events for detection testing.
 
 ## Live Log Monitoring Setup
 
-Selected "Monitor" option in Splunk to enable real-time log ingestion.
+Configured Splunk file monitoring input to continuously ingest authentication logs from /var/log/auth.log.
 
 Configured Splunk to monitor files and directories for continuous log ingestion.
 
@@ -57,7 +57,7 @@ Rather than redirecting logs manually, Splunk continuously reads new entries fro
 
 This allows real-time ingestion of authentication events such as SSH login attempts.
 
-## Detection: Failed Logins by IP
+## Detection: SSH Brute Force Attempts by Source IP
 
 Used regex extraction to identify source IPs from authentication logs.
 
@@ -67,10 +67,9 @@ index=main "Failed password"
 | rex "from (?<src_ip>\d+\.\d+\.\d+\.\d+)"
 | stats count by src_ip
 
-This allows identification of potential brute-force attempts.
+This detection is critical in real-world environments because repeated failed authentication attempts from a single source IP often indicate brute-force or credential stuffing attacks, which are commonly used as an initial access vector.
 
 ![image](screenshots/failed-logins-by-ip.png)
-## Detection: Failed SSH Authentication Attempts by Source IP
 
 Analyzed authentication logs to identify repeated failed login attempts and determine the originating source IP.
 
@@ -100,3 +99,15 @@ This demonstrates the ability to:
 - Correlate events by source to detect potential threats
 
 This approach can be extended to detect brute-force attacks and trigger alerts based on defined thresholds.
+
+## Key Takeaways
+
+Through this lab, I learned how to:
+
+- Ingest and monitor system authentication logs in Splunk
+- Simulate attack activity to generate real security events
+- Use regex (rex) to extract fields from raw log data
+- Aggregate and analyze events to detect suspicious behavior
+- Identify brute-force patterns based on failed login attempts
+
+This exercise helped me understand how SIEM tools like Splunk are used in real-world SOC environments to detect and investigate threats.
