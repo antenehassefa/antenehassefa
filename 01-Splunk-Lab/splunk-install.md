@@ -6,7 +6,7 @@
 Successfully uploaded auth.log into Splunk.
 Data is now indexed and ready for search and analysis.
 
-![image]()
+
 ## Initial Log Search
 
 Executed search query:
@@ -20,6 +20,7 @@ Successfully retrieved system logs including:
 
 Confirmed that log ingestion and indexing are working correctly.
 
+![image](screenshots/splunk-first-results.png)
 ## Simulated Attack: Failed SSH Logins
 
 Performed multiple failed SSH login attempts using a non-existent user account.
