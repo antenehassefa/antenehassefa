@@ -16,5 +16,8 @@
 - SSH enabled for remote access
 
 ![image](screenshots/network-config.png)
+
+![image](screenshots/failed-ssh-attempts-terminal.png)
+
 ### System Ready State
 The server is fully configured and ready for Splunk installation.
