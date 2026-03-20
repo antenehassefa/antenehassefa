@@ -1,113 +1,53 @@
 
 
+## Simulated Attack: Successful SSH Login
 
-## Data Upload Completion
-
-Successfully uploaded auth.log into Splunk.
-Data is now indexed and ready for search and analysis.
-
-
-## Initial Log Search
-
-Executed search query:
-
-index=main
-
-Successfully retrieved system logs including:
-- sudo activity
-- cron jobs
-- user sessions
-
-Confirmed that log ingestion and indexing are working correctly.
-
-![image](screenshots/splunk-first-results.png)
-## Simulated Attack: Failed SSH Logins
-
-Performed multiple failed SSH login attempts using a non-existent user account.
+After generating multiple failed SSH login attempts, a successful SSH login was performed using valid credentials.
 
 Purpose:
-Generate authentication failure events for detection testing.
+Simulate a scenario in which an attacker eventually gains access after repeated failed attempts.
 
-![image](screenshots/failed-logins-by-ssh.png)
+![image](screenshots/successful-ssh-login.png)
 
+## Detection: Successful SSH Logins
 
-## Live Log Monitoring Setup
-
-Configured Splunk file monitoring input to continuously ingest authentication logs from /var/log/auth.log.
-
-Configured Splunk to monitor files and directories for continuous log ingestion.
-
-## Live Log Monitoring Configuration
-
-Configured Splunk to monitor the Linux authentication log file located at:
-
-/var/log/auth.log
-
-Logs are indexed under the "main" index using the linux_secure source type.
-
-This enables real-time ingestion of authentication events.
-
-![image](screenshots/splunk-live-config-review.png)
-
-## Log Ingestion Mechanism
-
-Splunk was configured to monitor the file /var/log/auth.log.
-
-Rather than redirecting logs manually, Splunk continuously reads new entries from the file as they are written by the operating system.
-
-This allows real-time ingestion of authentication events such as SSH login attempts.
-
-## Detection: SSH Brute Force Attempts by Source IP
-
-Used regex extraction to identify source IPs from authentication logs.
+Analyzed authentication logs to identify successful SSH login activity.
 
 Query:
 
-index=main "Failed password"
+index=main "Accepted password"
+
+This search returns successful SSH authentication events recorded in the authentication log.
+
+![image](screenshots/successful-logins-search.png)
+
+## Detection: Successful SSH Logins by Source IP
+
+Used regex extraction to identify the source IP address associated with successful SSH logins.
+
+Query:
+
+index=main "Accepted password"
 | rex "from (?<src_ip>\d+\.\d+\.\d+\.\d+)"
-| stats count by src_ip
-
-This detection is critical in real-world environments because repeated failed authentication attempts from a single source IP often indicate brute-force or credential stuffing attacks, which are commonly used as an initial access vector.
-
-![image](screenshots/failed-logins-by-ip.png)
-
-Analyzed authentication logs to identify repeated failed login attempts and determine the originating source IP.
-
-Executed query:
-
-index=main ssh
-| rex "rhost=(?<src_ip>\d+\.\d+\.\d+\.\d+)"
 | stats count by src_ip
 | sort -count
 
-### Analysis
+This helps identify which hosts successfully authenticated to the system.
 
-The query extracts the source IP address from SSH authentication failure events and aggregates the number of attempts per IP.
+## Detection Logic
 
-This allows identification of hosts generating repeated failed login attempts, which may indicate brute-force activity.
+A potentially suspicious authentication pattern is identified when:
 
-### Result
+- Multiple failed login attempts are followed by a successful login
+- The events originate from the same source IP
+- The activity occurs within a short period of time
 
-Observed multiple failed authentication attempts originating from a single source IP (127.0.0.1), corresponding to simulated attack activity.
+This pattern may indicate a successful brute-force attempt or unauthorized access using valid credentials.
 
-![image](screenshots/ip-counts.png)
-### Insight
+This logic can be used in a SIEM to prioritize investigation and generate alerts for possible account compromise.
 
-This demonstrates the ability to:
-- Parse unstructured log data using regex
-- Identify patterns of suspicious authentication behavior
-- Correlate events by source to detect potential threats
+## Insight
 
-This approach can be extended to detect brute-force attacks and trigger alerts based on defined thresholds.
+This detection improves visibility into authentication behavior by showing not only failed access attempts, but also whether access was eventually gained.
 
-## Key Takeaways
-
-Through this lab, I learned how to:
-
-- Ingest and monitor system authentication logs in Splunk
-- Simulate attack activity to generate real security events
-- Use regex (rex) to extract fields from raw log data
-- Aggregate and analyze events to detect suspicious behavior
-- Identify brute-force patterns based on failed login attempts
-
-This exercise helped me understand how SIEM tools like Splunk are used in real-world SOC environments to detect and investigate threats.
+In a real-world SOC environment, correlating failed and successful logins from the same source can help analysts identify compromised accounts and investigate possible intrusion activity more effectively.
